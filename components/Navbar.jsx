@@ -6,17 +6,17 @@ import Image from "next/image";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
-  const isLoggedIn = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setupProviders = async () => {
       const response = await getProviders();
 
       setProviders(response);
     };
-    setProviders();
+    setupProviders();
   }, []);
 
   return (
@@ -35,7 +35,7 @@ const Navbar = () => {
 
       {/* desktop navbar */}
       <div className="sm:flex hidden">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -47,7 +47,7 @@ const Navbar = () => {
 
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 className="rounded-full"
                 width={37}
                 height={37}
@@ -74,10 +74,10 @@ const Navbar = () => {
 
       {/* Mobile navbar */}
       <div className="sm:hidden flex relative">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               className="rounded-full"
               width={37}
               height={37}

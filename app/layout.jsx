@@ -1,4 +1,4 @@
-import { Navbar } from "@components";
+import { Navbar, Provider } from "@components";
 import "@styles/global.css";
 // import { Inter } from "next/font/google";
 
@@ -19,14 +19,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="main">
-          <div className="gradient" />
-        </div>
+        <Provider>
+          <div className="main">
+            <div className="gradient" />
+          </div>
 
-        <main className="app">
-          <Navbar />
-          {children}
-        </main>
+          <main className="app">
+            <Navbar />
+            {children}
+          </main>
+        </Provider>
       </body>
     </html>
   );
