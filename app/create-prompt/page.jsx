@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { Form } from "@components";
 
@@ -14,6 +14,8 @@ const CreatePrompt = () => {
   });
 
   const router = useRouter();
+
+  const { data: session } = useSession();
 
   const createPrompt = async (e) => {
     e.preventDefault();
