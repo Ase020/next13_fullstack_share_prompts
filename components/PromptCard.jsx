@@ -8,6 +8,12 @@ import Image from "next/image";
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
 
+  const { data: session } = useSession();
+
+  const router = useRouter();
+
+  const pathName = usePathname();
+
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -57,6 +63,24 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       >
         {post.tag}
       </p>
+
+      {session?.user.id === post.creator._id && pathName === "/profile" && (
+        <div className="flex-center gap-5 border-t mt-5 border-gray-200 pt-3">
+          <p
+            className="font-inter font-sm cursor-pointer green_gradient"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+
+          <p
+            className="font-inter font-sm cursor-pointer orange_gradient"
+            onClick={handleDelete}
+          >
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
